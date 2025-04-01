@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CarModel extends Model
 {
@@ -13,4 +15,14 @@ class CarModel extends Model
         'title',
         'brand_id'
     ];
+
+    public function scopeFilterByTitle(Builder $query, ?string $title): Builder
+    {
+        return $title ? $query->where('title', 'like', '%' . $title . '%') : $query;
+    }
+
+    public function brand(): BelongsTo
+    {
+        return $this->belongsTo(CarBrand::class, 'brand_id');
+    }
 }
