@@ -1,0 +1,303 @@
+openapi: 3.0.0
+info:
+  title: Car Brands and Models API
+  description: API для управления марками автомобилей и их модельным рядом.
+  version: 1.0.0
+servers:
+  - url: http://localhost/api
+    description: Локальный сервер
+
+paths:
+  /car-brands:
+    get:
+      summary: Получить список марок автомобилей
+      description: Возвращает список всех марок автомобилей с фильтрацией по названию (если указано).
+      parameters:
+        - in: query
+          name: title
+          required: false
+          schema:
+            type: string
+          description: Фильтровать марки автомобилей по названию.
+      responses:
+        '200':
+          description: Успешный запрос. Список марок автомобилей.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CarBrand'
+        '404':
+          description: Марки автомобилей не найдены.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+    post:
+      summary: Создать новую марку автомобиля
+      description: Создает новую марку автомобиля в базе данных.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarBrandRequest'
+      responses:
+        '201':
+          description: Успешно создана марка автомобиля.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarBrand'
+
+  /car-brands/{id}:
+    get:
+      summary: Получить информацию о марке автомобиля
+      description: Возвращает детальную информацию о марке автомобиля по ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID марки автомобиля.
+      responses:
+        '200':
+          description: Успешный запрос. Информация о марке автомобиля.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarBrand'
+        '404':
+          description: Марка автомобиля не найдена.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+    put:
+      summary: Обновить информацию о марке автомобиля
+      description: Обновляет данные марки автомобиля по ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID марки автомобиля.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarBrandRequest'
+      responses:
+        '200':
+          description: Успешное обновление данных марки.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarBrand'
+    delete:
+      summary: Удалить марку автомобиля
+      description: Удаляет марку автомобиля по ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID марки автомобиля.
+      responses:
+        '200':
+          description: Марка автомобиля успешно удалена.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Car brand deleted!'
+
+  /car-models:
+    get:
+      summary: Получить список моделей автомобилей
+      description: Возвращает список всех моделей автомобилей с фильтрацией по названию (если указано).
+      parameters:
+        - in: query
+          name: title
+          required: false
+          schema:
+            type: string
+          description: Фильтровать модели автомобилей по названию.
+      responses:
+        '200':
+          description: Успешный запрос. Список моделей автомобилей.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CarModel'
+        '404':
+          description: Модели автомобилей не найдены.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+    post:
+      summary: Создать новую модель автомобиля
+      description: Создает новую модель автомобиля в базе данных.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarModelRequest'
+      responses:
+        '201':
+          description: Успешно создана модель автомобиля.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarModel'
+
+  /car-models/{id}:
+    get:
+      summary: Получить информацию о модели автомобиля
+      description: Возвращает детальную информацию о модели автомобиля по ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID модели автомобиля.
+      responses:
+        '200':
+          description: Успешный запрос. Информация о модели автомобиля.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarModel'
+        '404':
+          description: Модель автомобиля не найдена.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Record not found.'
+    put:
+      summary: Обновить информацию о модели автомобиля
+      description: Обновляет данные модели автомобиля по ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID модели автомобиля.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CarModelRequest'
+      responses:
+        '200':
+          description: Успешное обновление данных модели.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CarModel'
+    delete:
+      summary: Удалить модель автомобиля
+      description: Удаляет модель автомобиля по ID.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+          description: ID модели автомобиля.
+      responses:
+        '200':
+          description: Модель автомобиля успешно удалена.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: 'Car model has been deleted!'
+
+components:
+  schemas:
+    CarBrand:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarModel'
+
+    CarModel:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        brand:
+          $ref: '#/components/schemas/CarBrand'
+
+    CarBrandRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        models:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarModelRequest'
+
+    CarModelRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        brand_id:
+          type: integer
