@@ -13,7 +13,10 @@ return new class extends Migration
     {
         Schema::create('car_brands', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
             $table->timestamps();
+
+            $table->index('title', 'car_brands_title_index');
         });
     }
 

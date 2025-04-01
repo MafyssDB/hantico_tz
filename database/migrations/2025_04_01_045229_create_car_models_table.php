@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('car_models', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->foreignId('brand_id')->constrained('car_brands');
             $table->timestamps();
+
+            $table->index('title', 'car_models_title_index');
+            $table->index('brand_id', 'car_models_brand_id_index');
         });
     }
 
