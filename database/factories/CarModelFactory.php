@@ -21,7 +21,7 @@ class CarModelFactory extends Factory
     {
         return [
             'title' => $this->faker->word,
-            'brand_id' => random_int(1, 10),
+            'brand_id' => CarBrand::query()->inRandomOrder()->value('id') ?? CarBrand::factory(),
         ];
     }
 }
